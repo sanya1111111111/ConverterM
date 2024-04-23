@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class FileConverter {
 
-    private final static HashMap<Integer,String> SUPPORTED_FORMATS = new HashMap<>() {
+    private final static HashMap<Integer, String> SUPPORTED_FORMATS = new HashMap<>() {
         {
             put(1, "JPG");
             put(2, "JPEG");
@@ -20,8 +20,8 @@ public class FileConverter {
 
     public static void convert(String inputImagePath, String outputImagePath, String formatName) throws WrongMethodException {
         if (!checkFormat(formatName)) throw new WrongMethodException(formatName);
-        try(FileInputStream inputStream = new FileInputStream(inputImagePath);
-            FileOutputStream outputStream = new FileOutputStream(outputImagePath)) {
+        try (FileInputStream inputStream = new FileInputStream(inputImagePath);
+             FileOutputStream outputStream = new FileOutputStream(outputImagePath)) {
             ImageIO.write(ImageIO.read(inputStream), formatName, outputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -23,7 +23,7 @@ public class ConsoleLaunch {
         }
     }
 
-    private static void convertFromFile(Scanner input){
+    private static void convertFromFile(Scanner input) {
         System.out.println("Введите путь к конвертируемому файлу");
         String inputFile = input.next();//Строка отвечающая за путь получает значение из консоли
         System.out.println("Введите путь к итоговому файлу");
@@ -37,7 +37,7 @@ public class ConsoleLaunch {
         }
     }
 
-    private static void convertFromDir(Scanner input){
+    private static void convertFromDir(Scanner input) {
         System.out.println("Введите путь к директории с конвертируемыми файлами");
         String inputFile = input.next();
         System.out.println("Введите путь к директории для итоговых файлов");
