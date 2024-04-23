@@ -1,49 +1,57 @@
 package ru.vyatgu.converter;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
+import java.io.*;
+import java.util.HashMap;
 
 
 public class FileConverter {
 
-    private final static String[] SUPPORTED_FORMATS = {"JPG", "JPEG", "PNG", "BMP", "WBMP","GIF"};
+    private final static HashMap<Integer,String> SUPPORTED_FORMATS = new HashMap<>() {
+        {
+            put(1, "JPG");
+            put(2, "JPEG");
+            put(3, "PNG");
+            put(4, "BMP");
+            put(5, "WBMP");
+            put(6, "GIF");
+        }
+    };
 
-    public static void convert(String inputImagePath, String outputImagePath, String formatName) throws IOException {
-        if (!checkFormat(formatName)) throw new IOException();
-        FileInputStream inputStream = new FileInputStream(inputImagePath);
-        FileOutputStream outputStream = new FileOutputStream(outputImagePath+"."+formatName);
-        BufferedImage inputImage = ImageIO.read(inputStream);
-        ImageIO.write(inputImage, formatName, outputStream);
-        outputStream.close();
-        inputStream.close();
+    public static void convert(String inputImagePath, String outputImagePath, String formatName) throws WrongMethodException {
+        if (!checkFormat(formatName)) throw new WrongMethodException(formatName);
+        try(FileInputStream inputStream = new FileInputStream(inputImagePath);
+            FileOutputStream outputStream = new FileOutputStream(outputImagePath)) {
+            ImageIO.write(ImageIO.read(inputStream), formatName, outputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public static String massConvert(String inputDir, String outputDir, String formatName){
+
+    public static String massConvert(String inputDir, String outputDir, String formatName) {
+
         if (!checkFormat(formatName)) return "Ошибка неверный формат";
         File dir = new File(inputDir);
         int sucRate = 0;
         int errRate = 0;
-        for ( File file : dir.listFiles() ){
-            if ( file.isFile() ) {
+
+        for (File file : dir.listFiles()) {
+            if (file.isFile()) {
                 FileTools managedFile = new FileTools(file);
                 try {
-                    if (checkFormat(managedFile.getFormat())){
+                    if (checkFormat(managedFile.getFormat())) {
                         FileConverter.convert(file.getAbsolutePath(), outputDir + "\\" + managedFile.getNameWithoutFormat(), formatName);
                         sucRate += 1;
-                    }
-                    else throw new IOException();
-                } catch (IOException ex) {
+                    } else throw new WrongMethodException(managedFile.getFormat());
+                } catch (WrongMethodException ex) {
                     errRate += 1;
                 }
             }
         }
-        return "Удачно конвертированно: "+sucRate+" Возникла ошибка: "+ errRate;
+        return String.format("Удачно конвертированно: %d", sucRate) + String.format(" Возникла ошибка: %d", errRate);
     }
-    private static boolean checkFormat(String formatName){
-        return Arrays.asList(SUPPORTED_FORMATS).contains(formatName.toUpperCase());
+
+    private static boolean checkFormat(String formatName) {
+        return SUPPORTED_FORMATS.containsValue(formatName.toUpperCase());
     }
 }

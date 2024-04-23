@@ -3,17 +3,21 @@ package ru.vyatgu.converter;
 import java.io.File;
 
 public class FileTools {
-    private File file;
-    public FileTools(File file){
+    private final File file;
+
+    public FileTools(File file) {
         this.file = file;
     }
-    public String getNameWithoutFormat(){
+
+    public String getNameWithoutFormat() {
         return this.file.getName().substring(0, getDotPosition());
     }
-    public String getFormat(){
-        return this.file.getName().substring(getDotPosition()+1);
+
+    public String getFormat() {
+        return this.file.getName().substring(getDotPosition() + 1);
     }
-    public int getDotPosition(){
+
+    public int getDotPosition() {
         return this.file.getName().lastIndexOf(".");
     }
 }
