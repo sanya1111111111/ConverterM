@@ -1,4 +1,4 @@
-package ImageConverter;
+package ru.vyatgu.converter;
 
 import java.io.File;
 

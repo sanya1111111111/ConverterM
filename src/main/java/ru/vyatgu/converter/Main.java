@@ -1,4 +1,4 @@
-package ImageConverter;
+package ru.vyatgu.converter;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -23,7 +23,7 @@ public class Main {
                     System.out.println("Введите формат для конвертации файла");
                     format = input.next();//Строка отвечающая за путь получает значение из консоли
                     try {
-                        fileConverter.convert(inputFile, outputFile, format);
+                        FileConverter.convert(inputFile, outputFile, format);
                     } catch (IOException ex) {
                         System.out.println("Ошибка при конверсии файла.");
                     }
@@ -35,7 +35,7 @@ public class Main {
                     outputFile = input.next();
                     System.out.println("Введите формат для конвертации файлов");
                     format = input.next();
-                    System.out.println(fileConverter.massConvert(inputFile, outputFile, format));
+                    System.out.println(FileConverter.massConvert(inputFile, outputFile, format));
                     break;
                 case 3:
                     return;
