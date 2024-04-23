@@ -32,8 +32,8 @@ public class ConsoleLaunch {
         String format = input.next();//Строка отвечающая за путь получает значение из консоли
         try {
             FileConverter.convert(inputFile, outputFile, format);
-        } catch (WrongMethodException e) {
-            throw new RuntimeException(e);
+        } catch (WrongFormatException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -44,7 +44,11 @@ public class ConsoleLaunch {
         String outputFile = input.next();
         System.out.println("Введите формат для конвертации файлов");
         String format = input.next();
-        System.out.println(FileConverter.massConvert(inputFile, outputFile, format));
+        try {
+            System.out.println(FileConverter.massConvert(inputFile, outputFile, format));
+        } catch (WrongFormatException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 }

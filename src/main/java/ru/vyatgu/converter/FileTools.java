@@ -10,15 +10,15 @@ public class FileTools {
     }
 
     public String getNameWithoutFormat() {
-        return this.file.getName().substring(0, getDotPosition());
+        return file.getName().substring(0, getDotPosition());
     }
 
     public String getFormat() {
-        return this.file.getName().substring(getDotPosition() + 1);
+        return file.getName().substring(getDotPosition() + 1);
     }
 
     public int getDotPosition() {
-        return this.file.getName().lastIndexOf(".");
+        return file.getName().lastIndexOf(".");
     }
 }
 
