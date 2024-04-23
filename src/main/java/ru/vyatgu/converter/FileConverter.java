@@ -21,7 +21,7 @@ public class FileConverter {
     public static void convert(String inputImagePath, String outputImagePath, String formatName) throws WrongFormatException {
         if (!checkFormat(formatName)) throw new WrongFormatException(formatName);
         try (FileInputStream inputStream = new FileInputStream(inputImagePath);
-             FileOutputStream outputStream = new FileOutputStream(outputImagePath)) {
+             FileOutputStream outputStream = new FileOutputStream(outputImagePath + "." + formatName)) {
             ImageIO.write(ImageIO.read(inputStream), formatName, outputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
